@@ -1,0 +1,47 @@
+Kishechka = 100
+
+Bag = {"Hilka": 3, "Poison": 1}
+
+while True:
+    string = input()
+    character = "o"
+    report = f"Now Kishechka has {Kishechka - 10} HP"
+    report_healing = f"Kishechka is healed! Now Kishechka has {Kishechka + 20} HP"
+
+    if character in string:
+        print("Thank you so much for satisfying the condition :)")
+        break
+    else:
+        print("You are so wrong, try again!")
+        print("By the way, Kishechka lost 10 HP")
+        Kishechka -= 10
+        print(report)
+
+
+        if Kishechka <= 10:
+            print("Kishechka needs healing!")
+            vybor = int(input("Choose 1 or 2:"))
+            if vybor == 1:
+                if Bag["Hilka"] <= 0: 
+                    print("You ran out of Hilka")
+                else:
+                    Kishechka += 20
+                    Bag["Hilka"] -= 1
+                    result_Hilka = Bag["Hilka"]
+                    print(report_healing)
+                    print(report)
+                    print(f"You have {result_Hilka} remaining")
+                   
+            if vybor == 2:
+                Bag["Poison"] -= 1
+                result_Poison = Bag["Poison"] - 1
+                print(f"You have {result_Poison} remaining")
+                print( )
+                print( )
+                print("You poisoned Kishechka, WHY???????????????????")
+                Kishechka = 0
+
+        if Kishechka <= 0:
+            print( )
+            print("Oh no, Kishechka Died :(")
+            break
