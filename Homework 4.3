@@ -1,0 +1,11 @@
+list1 = list(range(1, 10000))
+
+list2 = []
+
+for n in list1:
+    if (n % 10) // 2 == 0:
+        list2.append(n)
+
+sum_of_even = (sum(list2))
+
+print(sum_of_even)
