@@ -1,0 +1,12 @@
+from Homework5 import multifunction
+
+Process4 = multifunction(52352352345234, 263452632643265346)
+Process5 = multifunction("what", "who")
+Process6 = multifunction("what", 24)
+
+
+print(Process4)
+print()
+print(Process5)
+print()
+print(Process6)
