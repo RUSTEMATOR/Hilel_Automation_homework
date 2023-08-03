@@ -1,0 +1,26 @@
+def multifunction(argument1, argument2):
+    if isinstance(argument1, int) and isinstance(argument2, int):
+       multiplication = argument1 * argument2
+       return multiplication
+       
+    
+    elif isinstance(argument1, str) and isinstance(argument2, str): 
+        concatenation = argument1 + argument2
+        return concatenation
+    
+    
+    else:
+        return argument1, argument2
+    
+if __name__ == '__main__':
+    
+    Process1 = multifunction(3, 2)
+    Process2 = multifunction("Kishechka", " Died")
+    Process3 = multifunction(2, "Kishechkas")
+
+
+    print(Process1)
+    print()
+    print(Process2)
+    print()
+    print(Process3)
