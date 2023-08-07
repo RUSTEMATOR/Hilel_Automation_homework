@@ -1,0 +1,24 @@
+import turtle
+
+okno = turtle.Screen()
+cherepaha = turtle.Turtle()
+cherepaha.speed(0)
+
+def fibonachka(a):
+    if a <= 0:
+        return 0
+
+    if a == 1:
+        return 1
+
+    else:
+        return(fibonachka (a - 1) + fibonachka(a - 2))
+
+a = 50
+for num in range(a):
+    print(fibonachka(num))
+    cherepaha.forward(num * 5)
+    cherepaha.left(90)
+
+
+okno.exitonclick()
