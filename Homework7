@@ -12,13 +12,10 @@ def creator():
     with open("random_stuff.txt", "a+") as f:
         randomno = f"{random.randint(0, 1000)}, {slovo(8)}\n"
         f.write(randomno)
-        
-
+    
     
 with open("random_stuff.txt") as f:
-    lines = f.readlines()
-    length = len(lines)
-           
+    lines = f.readlines()      
 
 def pozhiloi_skladivatel():
             summa_da = sum(int(line.split(",") [0]) for line in lines)
@@ -26,6 +23,9 @@ def pozhiloi_skladivatel():
     
 summa_aga = pozhiloi_skladivatel()
 print(f"The total sum of numbers in this file is {summa_aga}")
+
+#оно конечно вообще не имеет смысла, возможно я и зря настолько сильно
+#мимо задания пошёл
 
 try:
     suma_aga = 9000
