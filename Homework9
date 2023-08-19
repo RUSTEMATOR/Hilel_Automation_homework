@@ -24,7 +24,7 @@ class Figure():
         
     
     def perimeter_round(self):
-        print("Permeter of this circle is" + " " + str(2 * self.radius *  math.pi))
+        print("Perimeter of this circle is" + " " + str(2 * self.radius *  math.pi))
         
         """создал варианты измерения периметров разных фигур"""
  
