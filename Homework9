@@ -1,0 +1,74 @@
+import random
+import math
+
+
+class Figure():
+    """абстрактный класс фигуры"""
+    
+    def __init__(self, num_side, side_len, name):
+        self.num_side = num_side
+        self.name = name
+        self.side_len = side_len
+        
+    
+    def draw(self):
+        print("The figure" + " " + self.name + " is drawn")
+        
+    """условно нарисовал себе фигуру"""
+    
+    def perimeter(self):
+        if self.name.lower() == "round":
+            self.perimeter.round()
+        else:
+            print("Perimeter of the" + " " + self.name + " is" + " " + str(int(self.num_side) * int(self.side_len)))
+        
+    
+    def perimeter_round(self):
+        print("Permeter of this circle is" + " " + str(2 * self.radius *  math.pi))
+        
+        """создал варианты измерения периметров разных фигур"""
+ 
+
+    
+class even_sided_triangle(Figure):
+     def __init__(self, num_side, side_len, name):
+        super().__init__(num_side, side_len, name)
+
+
+
+
+class even_sided_square(Figure):
+     def __init__(self, num_side, side_len, name):
+        super().__init__(num_side, side_len, name)
+        
+
+
+class circle(Figure):
+     def __init__(self,name, radius):
+        super().__init__(0, 0, name)
+        self.radius = radius
+
+
+"""потомки стали в ряд"""
+
+
+Triangle = even_sided_triangle(3, random.randint(1, 1000), "triangle")
+
+Triangle.draw()
+Triangle.perimeter()
+print()
+
+Square = even_sided_square(4, random.randint(1, 1000), "square")
+
+Square.draw()
+Square.perimeter()
+print()
+
+Circle = circle("circle", random.randint(1, 1000))
+
+Circle.draw()
+Circle.perimeter_round()
+print()
+
+
+"""потомки посчитались"""
