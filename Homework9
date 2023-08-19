@@ -17,57 +17,51 @@ class Figure():
     """условно нарисовал себе фигуру"""
     
     def perimeter(self):
-        if self.name.lower() == "round":
-            self.perimeter.round()
-        else:
-            print("Perimeter of the" + " " + self.name + " is" + " " + str(int(self.num_side) * int(self.side_len)))
+        print("Perimeter of the" + " " + self.name + " is" + " " + str(int(self.num_side) * int(self.side_len)))
         
     
-    def perimeter_round(self):
-        print("Perimeter of this circle is" + " " + str(2 * self.radius *  math.pi))
-        
-        """создал варианты измерения периметров разных фигур"""
- 
-
     
-class even_sided_triangle(Figure):
-     def __init__(self, num_side, side_len, name):
-        super().__init__(num_side, side_len, name)
+class Even_sided_triangle(Figure):
+     def __init__(self, side_len, name):
+        super().__init__(3, side_len, name)
 
 
 
 
-class even_sided_square(Figure):
-     def __init__(self, num_side, side_len, name):
-        super().__init__(num_side, side_len, name)
+class Even_sided_square(Figure):
+     def __init__(self, side_len, name):
+        super().__init__(4, side_len, name)
         
 
 
-class circle(Figure):
+class Circle(Figure):
      def __init__(self,name, radius):
         super().__init__(0, 0, name)
         self.radius = radius
+        
+     def perimeter_round(self):
+        print("Permeter of this circle is" + " " + str(2 * self.radius *  math.pi))
 
 
 """потомки стали в ряд"""
 
 
-Triangle = even_sided_triangle(3, random.randint(1, 1000), "triangle")
+triangle = Even_sided_triangle(3, random.randint(1, 1000), "triangle")
 
-Triangle.draw()
-Triangle.perimeter()
+triangle.draw()
+triangle.perimeter()
 print()
 
-Square = even_sided_square(4, random.randint(1, 1000), "square")
+square = Even_sided_square(4, random.randint(1, 1000), "square")
 
-Square.draw()
-Square.perimeter()
+square.draw()
+square.perimeter()
 print()
 
-Circle = circle("circle", random.randint(1, 1000))
+circle = Circle("circle", random.randint(1, 1000))
 
-Circle.draw()
-Circle.perimeter_round()
+circle.draw()
+circle.perimeter_round()
 print()
 
 
