@@ -12,12 +12,12 @@ class Figure():
         
     
     def draw(self):
-        print("The figure" + " " + self.name + " is drawn")
+        print("The figure " +  self.name + " is drawn")
         
     """условно нарисовал себе фигуру"""
     
     def perimeter(self):
-        print("Perimeter of the" + " " + self.name + " is" + " " + str(int(self.num_side) * int(self.side_len)))
+        print("Perimeter of the " + self.name + " is " + str(int(self.num_side) * int(self.side_len)))
         
     
     
@@ -40,19 +40,19 @@ class Circle(Figure):
         self.radius = radius
         
      def perimeter_round(self):
-        print("Permeter of this circle is" + " " + str(2 * self.radius *  math.pi))
+        print("Permeter of this circle is " + str(2 * self.radius *  math.pi))
 
 
 """потомки стали в ряд"""
 
 
-triangle = Even_sided_triangle(3, random.randint(1, 1000), "triangle")
+triangle = Even_sided_triangle(random.randint(1, 1000), "triangle")
 
 triangle.draw()
 triangle.perimeter()
 print()
 
-square = Even_sided_square(4, random.randint(1, 1000), "square")
+square = Even_sided_square(random.randint(1, 1000), "square")
 
 square.draw()
 square.perimeter()
