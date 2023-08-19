@@ -1,13 +1,11 @@
-a = 1
-b= 1000
-
 def number_generator(a, b):
-    list = []
     for num in range(a, b):
-        if num >= 0: 
-            list.append(num)
-    return list
-    
+       if num >= 0:
+        yield num
+
+a = 1
+b= 1000   
 spisok = number_generator(a,b)
 
-print(spisok)
+for num in spisok:
+    print(num)
