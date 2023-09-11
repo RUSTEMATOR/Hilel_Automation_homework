@@ -1,0 +1,47 @@
+import pytest
+import requests
+
+registration_url = "https://qauto2.forstudy.space/api/auth/signup"
+
+login_url = "https://qauto2.forstudy.space/api/auth/signin"
+
+valid_user_info = {
+  "name": "Apex",
+  "lastName": "Legends",
+  "email": "abrakadabra@test.com",
+  "password": "Qwerty12345",
+  "repeatPassword": "Qwerty12345"
+}
+
+login_info = {
+    "email": "test@flex.com",
+    "password": "Qwerty12345"
+}
+
+headers = {"Accept": "application/json"}
+
+def test_registration():
+    response = requests.post(registration_url, json = valid_user_info, headers=headers)
+    assert response.status_code == 201
+
+def test_login():
+    response = requests.post(login_url, json = login_info, headers=headers)
+    assert response.status_code == 200
+
+@pytest.mark.parametrize(
+    "name, lastName, email, password, repeatPassword, expected_status",
+    [
+        ("Andrew", "Flex", "test1@flex.com", "Qwerty12345", "Qwerty12345", 200),
+        ("Anton", "Flex", "test1@flex.com", "1234", "1234", 400)
+    ]
+)
+def test_parametrized_reg(name, lastName, email, password, repeatPassword, expected_status):
+    user_info = {
+        "name": name,
+        "lastName": lastName,
+        "email": email,
+        "password": password,
+        "repeatPassword": repeatPassword
+    }
+    response = requests.post(registration_url, json=user_info, headers=headers)
+    assert response.status_code == expected_status
