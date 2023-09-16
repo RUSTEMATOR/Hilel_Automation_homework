@@ -1,0 +1,49 @@
+import pytest
+import requests
+
+
+registration_url = "https://qauto2.forstudy.space/api/auth/signup"
+
+login_url = "https://qauto2.forstudy.space/api/auth/signin"
+
+delete_url = "https://qauto2.forstudy.space/api/users"
+
+valid_user_info = {
+  "name": "Apex",
+  "lastName": "Legends",
+  "email": "abrakadbra@test.com",
+  "password": "Qwerty12345",
+  "repeatPassword": "Qwerty12345"
+}
+
+login_info = {
+    "email": "test@flex.com",
+    "password": "Qwerty12345"
+}
+
+headers = {"Accept": "application/json"}
+
+
+@pytest.fixture
+def registration():
+        response = requests.post(registration_url, json = valid_user_info, headers=headers)
+        assert response.status_code == 201
+        print("registration successful")
+        
+        yield
+        delete_user()
+        
+def delete_user():
+    response = requests.delete(delete_url, json = valid_user_info, headers=headers)
+    assert response.status_code == 200
+    print("The user is sucesfully deleted")
+
+ 
+
+def test_login(registration):
+    response = requests.post(login_url, json = login_info, headers=headers)
+    assert response.status_code == 200
+    print('successfully logged in')
+        
+    
+    
