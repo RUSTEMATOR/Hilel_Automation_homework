@@ -1,0 +1,85 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+
+
+driver = webdriver.Chrome()
+current_url = driver.current_url
+
+
+link = "https://guest:welcome2qauto@qauto2.forstudy.space"
+
+driver.implicitly_wait(10)
+
+#opening the link
+def opening_a_link():
+    driver.get(link)
+    print("Link opened")
+    
+
+
+class Registration:
+    #open the registration form
+    def page_access(self):
+        sign_in_button = driver.find_element(By.XPATH, "/html/body/app-root/app-global-layout/div/div/app-header/header/div/div/div[2]/button[2]" )
+        sign_in_button.click()
+    
+    def registration1(self):
+        registration_button = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signin-modal/div[3]/button[1]")
+        registration_button.click()
+        
+    #fill in name inout
+    def fill_name(self):
+        name = driver.find_element(By.ID, "signupName")
+        name.send_keys("Alex")
+        print("Name input filled")
+    
+    #fill in surname
+    def last_name(self):
+        last_name = driver.find_element(By.ID, "signupLastName")
+        last_name.send_keys("Flex")
+        print("Surname input filled")
+        
+
+    #fill in email input   
+    def fill_in_email(self):
+        email = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[2]/app-signup-form/form/div[3]/input")
+        email.send_keys("crazybizygaga@gmail.com")
+        print("Email input filled")
+        
+    #fill in password input
+    def fill_in_password(self):
+        password = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[2]/app-signup-form/form/div[4]/input")
+        password.send_keys("193786Az")
+        print("Password input filled")
+    
+    #confirm password
+    
+    def confirm_pass(self):
+        confirm = driver.find_element(By.ID, "signupRepeatPassword")
+        confirm.send_keys("193786Az")
+        print("Password input filled")
+        
+    #press on register button
+    def register(self):
+        register_button = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[3]/button")
+        register_button.click()
+    
+        
+        
+
+if __name__ == "__main__":
+    opening_a_link()
+    registration = Registration()
+    registration.page_access()
+    registration.registration1()
+    registration.fill_name()
+    registration.last_name()
+    registration.fill_in_email()
+    registration.fill_in_password()
+    registration.confirm_pass()
+    registration.register()
+    
+    #added intentionally! in order to check the result and make a video 
+    time.sleep(120)
