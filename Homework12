@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import requests
-import pytest
 
 valid_user_info = {
             "name": "Alex",
@@ -14,7 +13,6 @@ valid_user_info = {
         }
 
 class TestBase():
-    
     def setup_method(self):
         self._driver = webdriver.Chrome()
         self._session = requests.Session()
@@ -32,14 +30,18 @@ class TestTearDown(TestBase):
     def log_in(self):
         self._session.post(url="https://qauto2.forstudy.space/api/auth/signin", json=self.login_info, )
         print ("user logged in")
-    
+        
+        
     def delete_user(self):
         self._session.delete(url="https://qauto2.forstudy.space/api/users")
         print ("user deleted")
 
+    def driver_quit(self):
+        self._driver.quit
+        print("")
+        print("Test complete")
 
 class TestRegistration(TestTearDown):
-        
     def open_link(self):
         driver = self._driver
         link = "https://guest:welcome2qauto@qauto2.forstudy.space"
@@ -124,6 +126,7 @@ if __name__ == "__main__":
     registration.check_element()
     registration.log_in()
     registration.delete_user()
+    registration.driver_quit()
     
     #added intentionally! in order to check the result and make a video 
-    time.sleep(3)
+    time.sleep(1)
