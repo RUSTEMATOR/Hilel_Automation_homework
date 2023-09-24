@@ -5,13 +5,12 @@ import time
 import requests
 import pytest
 
-url = "https://qauto2.forstudy.space/api/auth/users"
-
-data = {
+valid_user_info = {
             "name": "Alex",
-            "lastname": "Flex",
-            "email": "crazybizygaga@gmail.com",
-            "password": "193786Az"
+            "lastName": "Flex",
+            "email": "crazybizygagabun@gmail.com",
+            "password": "193786Az",
+            "repeatPassword": "193786Az"
         }
 
 class TestBase():
@@ -19,22 +18,27 @@ class TestBase():
     def setup_method(self):
         self._driver = webdriver.Chrome()
         self._session = requests.Session()
-
-    def teardown_method(self):
-        try:
-            response = self._session.delete(url, json=data)
-            print("Delete request response:", response.text)
-        except Exception as e:
-            print("Error during teardown:", str(e))
-        finally:
-            if self._driver:
-                self._driver.quit()
-            if self._session:
-            # Perform session cleanup if needed
-                pass
+        self.user_email = "crazybizygagabun@gmail.com"
+        self.user_password = "193786Az"
         
- 
-class Registration(TestBase):
+        self.login_info = {
+        "email": self.user_email,
+        "password": self.user_password,
+        "remember": False
+    }
+    
+        
+class TestTearDown(TestBase):
+    def log_in(self):
+        self._session.post(url="https://qauto2.forstudy.space/api/auth/signin", json=self.login_info, )
+        print ("user logged in")
+    
+    def delete_user(self):
+        self._session.delete(url="https://qauto2.forstudy.space/api/users")
+        print ("user deleted")
+
+
+class TestRegistration(TestTearDown):
         
     def open_link(self):
         driver = self._driver
@@ -72,14 +76,14 @@ class Registration(TestBase):
     def fill_in_email(self):
         driver = self._driver
         email = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[2]/app-signup-form/form/div[3]/input")
-        email.send_keys("crazybizygaga@gmail.com")
+        email.send_keys(self.user_email)
         print("Email input filled")
         
     #fill in password input
     def fill_in_password(self):
         driver = self._driver
         password = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[2]/app-signup-form/form/div[4]/input")
-        password.send_keys("193786Az")
+        password.send_keys(self.user_password)
         print("Password input filled")
     
     #confirm password
@@ -87,7 +91,7 @@ class Registration(TestBase):
     def confirm_pass(self):
         driver = self._driver
         confirm = driver.find_element(By.ID, "signupRepeatPassword")
-        confirm.send_keys("193786Az")
+        confirm.send_keys(self.user_password)
         print("Password input filled")
         
     #press on register button
@@ -96,21 +100,17 @@ class Registration(TestBase):
         register_button = driver.find_element(By.XPATH, "/html/body/ngb-modal-window/div/div/app-signup-modal/div[3]/button")
         register_button.click()
     
-    def teardown_method(self):
-        url = "https://qauto2.forstudy.space/api/auth/users"
-        data = {
-            "name": "Alex",
-            "lastname": "Flex",
-            "email": "crazybizygaga@gmail.com",
-            "password": "193786Az"
-        }
-        response = self._session.delete(url, json=data)
-        print("Delete request response:", response.text)
+    def check_element(self):
+        driver = self._driver
+        driver.implicitly_wait(5)
+        add_car_button = driver.find_element(By.XPATH, "/html/body/app-root/app-global-layout/div/div/div/app-panel-layout/div/div/div/div[2]/div/app-garage/div/div[1]/button")
+        add_car_button.click()
+    
         
         
 
 if __name__ == "__main__":
-    registration = Registration()
+    registration = TestRegistration()
     registration.setup_method()
     registration.open_link()
     registration.page_access()
@@ -121,7 +121,9 @@ if __name__ == "__main__":
     registration.fill_in_password()
     registration.confirm_pass()
     registration.register()
-    registration.teardown_method()
+    registration.check_element()
+    registration.log_in()
+    registration.delete_user()
     
     #added intentionally! in order to check the result and make a video 
-    time.sleep(120)
+    time.sleep(3)
