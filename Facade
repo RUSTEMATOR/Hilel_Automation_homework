@@ -1,0 +1,74 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+import requests
+from registration_facade import RegistrationFacade
+from garage_page import GaragePage
+
+
+valid_user_info = {
+            "name": "Alex",
+            "lastName": "Flex",
+            "email": "crazybizygagabooooon@gmail.com",
+            "password": "193786Az",
+            "repeatPassword": "193786Az"
+        }
+
+class TestBase():
+    def setup_method(self):
+        self._driver = webdriver.Chrome()
+        self._session = requests.Session()
+        self.user_email = "crazybizygagabooooon@gmail.com"
+        self.user_password = "193786Az"
+        self.registration_facade = RegistrationFacade(self._driver)
+        self.garage_page = GaragePage(self._driver)
+        
+        
+        
+        self.login_info = {
+        "email": self.user_email,
+        "password": self.user_password,
+        "remember": False
+    }
+    
+        
+class TestTearDown(TestBase):
+    def log_in(self):
+        self._session.post(url="https://qauto2.forstudy.space/api/auth/signin", json=self.login_info)
+        print ("user logged in")
+        
+        
+    def delete_user(self):
+        self._session.delete(url="https://qauto2.forstudy.space/api/users")
+        print ("user deleted")
+
+    def driver_quit(self):
+        self._driver.quit()
+        print("")
+        print("Test complete")
+
+class TestRegistration(TestTearDown):
+    def open_link(self):
+        driver = self._driver
+        link = "https://guest:welcome2qauto@qauto2.forstudy.space"
+        driver.get(link)
+        print("Linked opened")
+        
+            
+    def registration(self):
+        self.registration_facade.register_user("Alex", "Flex", "crazybizygagabooooon@gmail.com", "193786Az", "193786Az")
+        
+    def check_element(self):
+        self.garage_page.add_car_button().click()
+
+if __name__ == "__main__":
+    registration = TestRegistration()
+    registration.setup_method()
+    registration.open_link()
+    registration.registration()
+    registration.check_element()
+    registration.log_in()
+    registration.delete_user()
+    registration.driver_quit()
+    
