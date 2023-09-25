@@ -1,0 +1,121 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+import requests
+from main_page import MainPage
+from registration_form_page import RegistrationFormPage
+from garage_page import GaragePage
+
+
+valid_user_info = {
+            "name": "Alex",
+            "lastName": "Flex",
+            "email": "crazybizygagabnn@gmail.com",
+            "password": "193786Az",
+            "repeatPassword": "193786Az"
+        }
+
+class TestBase():
+    def setup_method(self):
+        self._driver = webdriver.Chrome()
+        self._session = requests.Session()
+        self.user_email = "crazybizygagabnn@gmail.com"
+        self.user_password = "193786Az"
+        self._main_page = MainPage(self._driver)
+        self._registration_form_page = RegistrationFormPage(self._driver)
+        self._garage_page = GaragePage(self._driver)
+        
+        self.login_info = {
+        "email": self.user_email,
+        "password": self.user_password,
+        "remember": False
+    }
+    
+        
+class TestTearDown(TestBase):
+    def log_in(self):
+        self._session.post(url="https://qauto2.forstudy.space/api/auth/signin", json=self.login_info, )
+        print ("user logged in")
+        
+        
+    def delete_user(self):
+        self._session.delete(url="https://qauto2.forstudy.space/api/users")
+        print ("user deleted")
+
+    def driver_quit(self):
+        self._driver.quit()
+        print("")
+        print("Test complete")
+
+class TestRegistration(TestTearDown):
+    def open_link(self):
+        driver = self._driver
+        link = "https://guest:welcome2qauto@qauto2.forstudy.space"
+        driver.get(link)
+        print("Linked opened")
+        
+            
+    #open the registration form
+    def page_access(self ):
+        self._main_page.sign_in_button().click()
+    
+    def start_registration1(self):
+       self._registration_form_page.start_registration_button().click()
+        
+    #fill in name input
+    def fill_name(self):
+        self._registration_form_page.name().send_keys("Alex")
+        print("Name input filled")
+    
+    #fill in surname
+    def last_name(self):
+        self._registration_form_page.last_name().send_keys("Flex")
+        print("Surname input filled")
+        
+
+    #fill in email input   
+    def fill_in_email(self):
+        self._registration_form_page.email().send_keys(self.user_email)
+        print("Email input filled")
+        
+    #fill in password input
+    def fill_in_password(self):
+        self._registration_form_page.password().send_keys(self.user_password)
+        print("Password input filled")
+    
+    #confirm password
+    
+    def confirm_pass(self):
+        self._registration_form_page.confirm().send_keys(self.user_password)
+        print("Password input filled")
+        
+    #press on register button
+    def register(self):
+        self._registration_form_page.register_button().click()
+    
+    def check_element(self):
+        self._garage_page.add_car_button().click()
+    
+        
+        
+
+if __name__ == "__main__":
+    registration = TestRegistration()
+    registration.setup_method()
+    registration.open_link()
+    registration.page_access()
+    registration.start_registration1()
+    registration.fill_name()
+    registration.last_name()
+    registration.fill_in_email()
+    registration.fill_in_password()
+    registration.confirm_pass()
+    registration.register()
+    registration.check_element()
+    registration.log_in()
+    registration.delete_user()
+    registration.driver_quit()
+    
+    #added intentionally! in order to check the result and make a video 
+    time.sleep(1)
